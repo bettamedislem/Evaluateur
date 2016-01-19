@@ -1,5 +1,8 @@
 import java.util.ArrayList;
-
+/**
+ * @author betta
+ *
+ */
 
 public class Identification {
 	
@@ -55,6 +58,7 @@ public class Identification {
 					parc++;
 					tc = Main.tabchaine[parc];
 				}
+				if(!Evaluation.isFct(mem) && (mem.length() == 1)) Main.isInter =true;
 				mot.add(mem);
 				mem = "";
 			}

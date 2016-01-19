@@ -7,18 +7,20 @@ import java.util.*;
  * @author betta
  *
  */
-public class Evaluation {
+public class Evaluation implements Evaluable {
 
 	/**
 	 * 
 	 */
 	//Result 
 	public float value = 0.0f; 
+	public float value() {return value;}
 	
 	
 	private int parc=0; //variable de parcours de la chaine 
 	private int pou,pfe=0; //nombre de parenthese ouvrante et fermante 
 	private String tc; // terme courant 
+	
 	
 	
 	//Erreurs
@@ -44,7 +46,7 @@ public class Evaluation {
 	private float E() {
 		float local = 0.0f,  localp =0.0f;
 		
-		if (tc == "(" || isInt(tc) || isFct(tc))
+		if (tc.equals("(") || isInt(tc) || isFct(tc) || tc.equals("-"))
         {
             local = T();
             localp = Ep(local);
@@ -88,7 +90,7 @@ public class Evaluation {
 	private float T() {
 		// TODO Auto-generated method stub
 		float local = 0.0f,  localp =0.0f;
-		if (tc.equals("(") || isInt(tc) || isFct(tc))
+		if (tc.equals("(") || isInt(tc) || isFct(tc) || tc.equals("-"))
         {
             local = F();
             localp = Tp(local);
@@ -150,6 +152,12 @@ public class Evaluation {
                 local = Float.parseFloat(tc+"");
             	parc++;
                 tc = Main.mot.get(parc);
+            }
+            else if(tc.equals("-"))
+            {
+            	parc++;
+	            tc = Main.mot.get(parc);
+	            local = -1*F();
             }
             else
             {
@@ -423,7 +431,7 @@ public class Evaluation {
 	
 	
 
-	public boolean isInt(String s)
+	public static boolean isInt(String s)
 	{
 		if(s.charAt(0) == ('.') && (Character.isDigit(s.charAt(1))) && s.substring(1).indexOf('.') == -1) {return true;}
 		else if ( Character.isDigit(s.charAt(0))) {return true;}	
@@ -431,23 +439,24 @@ public class Evaluation {
 		else return false;
 	}
 	
-	public boolean isOp1(String s)
+	public static boolean isOp1(String s)
 	{
 		if ((s.equals("+"))||(s.equals("-"))) {return true ;}
 		else return false ;
 	}
 	
-	public boolean isOp2(String s)
+	public static boolean isOp2(String s)
 	{
 		if ((s.equals("*"))||(s.equals("/"))) {return true ;}
 		else return false ;
 	}
 	
-	public boolean isFct(String s)
+	public static boolean isFct(String s)
 	{
 		if ((s.equals("somme"))||(s.equals("variance"))||(s.equals("moyenne"))||(s.equals("cos"))||(s.equals("som"))||(s.equals("sin"))||(s.equals("ecart"))||(s.equals("ecarttype"))||(s.equals("tan"))||(s.equals("moy"))||(s.equals("sum"))||(s.equals("var"))||(s.equals("average"))||(s.equals("avr"))||(s.equals("pow"))||(s.equals("power"))||(s.equals("puissance"))||(s.equals("puis"))||(s.equals("racine"))||(s.equals("rac"))||(s.equals("sqrt"))) {return true ;}
 		else return false ;
 	}
+	
 	
 	
 }
